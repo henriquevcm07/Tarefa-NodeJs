@@ -1,0 +1,33 @@
+{
+  "name": "tarefa-nodejs",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Implemente, dentro deste repositório, a API descrita no enunciado da tarefa (PDF em anexo na plataforma): \r gerenciamento de projetos, tarefas e usuários, com autenticação\r JWT e controle de acesso baseado em papéis (RBAC: `admin` e `user`). O contrato exato de\r rotas, payloads e códigos HTTP que sua API precisa seguir está em\r **[`docs/CONTRATO_API.pdf`](docs/CONTRATO_API.pdf)**. Leia esse arquivo com atenção, é ele\r que a correção automática usa como referência.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henriquevcm07/Tarefa-NodeJs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henriquevcm07/Tarefa-NodeJs/issues"
+  },
+  "homepage": "https://github.com/henriquevcm07/Tarefa-NodeJs#readme",
+  "dependencies": {
+    "@prisma/client": "7.9.1",
+    "@types/node": "26.1.2",
+    "fastify": "5.11.0",
+    "prisma": "7.9.1",
+    "tsup": "8.5.1",
+    "tsx": "4.23.1",
+    "typescript": "7.0.2"
+  }
+}
