@@ -1,0 +1,40 @@
+name: Notificar Avaliacao
+
+# Este workflow NAO roda a correcao — ele so avisa o avaliador (repositorio privado da
+# INJunior) que voce quer avaliar o commit atual, para que ele va buscar seu codigo e
+# rodar a suite de testes real. Nenhum teste roda aqui, nada de codigo de teste fica
+# exposto neste repositorio.
+#
+# E disparado manualmente (aba Actions -> Notificar Avaliacao -> Run workflow), nao a
+# cada push — assim voce escolhe quando quer ser avaliado, sem gerar um comentario/status
+# novo a cada commit intermediario/WIP.
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  notificar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Disparar avaliacao automatica
+        env:
+          DISPATCH_TOKEN: ${{ secrets.AVALIADOR_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$DISPATCH_TOKEN" ]; then
+            echo "::warning::Secret AVALIADOR_DISPATCH_TOKEN nao configurado neste repositorio. Sua avaliacao automatica nao vai disparar sozinha apos o push — veja o README (secao 'Como funciona a correcao') para o passo a passo de setup."
+            exit 0
+          fi
+
+          HTTP_STATUS=$(curl -sS -o /tmp/resposta.txt -w "%{http_code}" -X POST \
+            -H "Authorization: Bearer $DISPATCH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/IN-Junior-UFF/avaliador-testes-privado/dispatches" \
+            -d "{\"event_type\":\"avaliar\",\"client_payload\":{\"repo\":\"${GITHUB_REPOSITORY}\",\"sha\":\"${GITHUB_SHA}\"}}")
+
+          if [ "$HTTP_STATUS" != "204" ]; then
+            echo "::error::Falha ao notificar o avaliador (HTTP $HTTP_STATUS). Resposta:"
+            cat /tmp/resposta.txt
+            exit 1
+          fi
+
+          echo "Avaliacao automatica disparada para o commit ${GITHUB_SHA}."
