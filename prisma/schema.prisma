@@ -18,7 +18,6 @@ enum Status {
 }
 model Project {
   id            Int       @id @default(autoincrement())
-  publicId      String    @unique @default(uuid())
   name          String
   description   String?
   status        String    
@@ -29,7 +28,6 @@ model Project {
 
 model User{
   id            Int      @id @default(autoincrement())
-  publicId      String   @unique @default(uuid())
   name          String
   email         String   @unique
   password      String 
@@ -41,7 +39,6 @@ model User{
 
 model Task{
   id            Int       @id @default(autoincrement())
-  publicId      String    @unique @default(uuid())
   title         String
   description   String?
   priority      String
