@@ -1,7 +1,5 @@
-import { z } from 'zod'
 import { prisma } from '@/libs/prisma.js'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import bcrypt from 'bcryptjs'
 
 export async function deleteUser(request: FastifyRequest, reply: FastifyReply){
 
