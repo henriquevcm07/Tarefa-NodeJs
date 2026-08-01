@@ -9,9 +9,9 @@ export async function createTask(request: FastifyRequest, reply: FastifyReply){
     }
     const createTaskBodySchema = z.object({
         title: z.string().min(3).max(100),
-        description: z.string().optional().transform((val) => val ?? null),
+        description: z.string().optional(),
         priority: z.enum(['low', 'medium', 'high']),
-        deadline: z.coerce.date().optional().transform((val) => val ?? null),
+        deadline: z.coerce.date().optional(),
         projectId: z.coerce.number(),
     })
     const { title, description, priority, deadline, projectId } = createTaskBodySchema.parse(request.body)
@@ -19,9 +19,9 @@ export async function createTask(request: FastifyRequest, reply: FastifyReply){
     const task = await prisma.task.create({
         data:{
             title,
-            description,
+            ...(description&&{ description }),
             priority,
-            deadline,
+            ...deadline&&{ deadline },
             projectId,
         }})
 
