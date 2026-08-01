@@ -35,7 +35,13 @@ export async function assignTask(request: FastifyRequest, reply: FastifyReply){
     const updatedTask = await prisma.task.findUnique({
         where: {
             id: Number(targetTaskId),
-        },
+        }, include: {
+            tasksUsers: {
+                include: {  
+                    user: true,
+                },
+            }
+        }
     })
     return reply.status(200).send({ message: 'Usuários atribuídos à tarefa com sucesso.', task: updatedTask })
 }

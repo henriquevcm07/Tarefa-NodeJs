@@ -1,4 +1,3 @@
-import { z } from 'zod'
 import { prisma } from '@/libs/prisma.js'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
