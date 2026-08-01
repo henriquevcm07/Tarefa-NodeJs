@@ -4,10 +4,14 @@ import { verifyJwt } from '@/http/middleware/verify-jwt.js';
 import { getTask } from './getTask.js';
 import { createTask } from './createTask.js';
 import { updateTask } from './UpdateTask.js';
+import { deleteTask } from './deleteTask.js';
+import { finishTask } from './finishTask.js';
 
 export async function tasksRoutes(app: FastifyInstance){
         app.get('/', {onRequest: [verifyJwt]}, listTasks)
         app.get('/:id', {onRequest: [verifyJwt]}, getTask)
         app.post('/', {onRequest: [verifyJwt]}, createTask)
         app.put('/:id', {onRequest: [verifyJwt]}, updateTask)
+        app.delete('/:id', {onRequest: [verifyJwt]}, deleteTask)
+        app.patch('/:id', {onRequest: [verifyJwt]}, finishTask)
 }
