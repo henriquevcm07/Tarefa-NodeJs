@@ -27,5 +27,5 @@ export async function deleteUser(request: FastifyRequest, reply: FastifyReply){
         createdAt: user.createdAt,
         updatedAt: user.updatedAt
     }
-    return reply.status(200).send({user: userWithoutPassword, message: 'Usuário deletado com sucesso.'})
+    return reply.status(204).send({user: userWithoutPassword, message: 'Usuário deletado com sucesso.'})
     }
