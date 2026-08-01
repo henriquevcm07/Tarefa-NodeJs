@@ -32,6 +32,7 @@ export async function deleteProject(request: FastifyRequest, reply: FastifyReply
     })
 
     const projectResponse = {
+        id : project.id,
         name: project.name,
         description: project.description,
         status: project.status,

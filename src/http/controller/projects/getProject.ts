@@ -12,6 +12,7 @@ export async function getProject(request: FastifyRequest, reply: FastifyReply){
         return reply.status(404).send({ error: 'Projeto não encontrado' })
     }
     const projectResponse = {
+        id: project.id,
         name: project.name,
         description: project.description,
         status: project.status,

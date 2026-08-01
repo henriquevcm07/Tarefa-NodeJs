@@ -22,6 +22,7 @@ export async function createProject(request: FastifyRequest, reply: FastifyReply
             status,
         }})
     const projectResponse = {
+        id: project.id,
         name: project.name,
         description: project.description,
         status: project.status,
