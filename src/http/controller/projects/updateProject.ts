@@ -8,7 +8,7 @@ export async function updateProject(request: FastifyRequest, reply: FastifyReply
         return reply.status(403).send({ message: 'Acesso negado.' })
     }
 
-    const targetProject =  request.params as { id: string }
+    const { id: targetProjectId } = request.params as { id: string }
 
     const updateProjectParamsSchema = z.object({
         name: z.string().trim().min(1).max(100).optional(),
@@ -31,7 +31,7 @@ export async function updateProject(request: FastifyRequest, reply: FastifyReply
 
     const project = await prisma.project.update({
         where: {
-            id: Number(targetProject.id),
+            id: Number(targetProjectId),
         },
         data: dataToUpdate
     })

@@ -3,8 +3,8 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
 export async function createProject(request: FastifyRequest, reply: FastifyReply){
+    
     const userPayload = request.user as { sub: string, role: string }
-
     if (userPayload.role !== 'admin') {
         return reply.status(403).send({ message: 'Acesso negado.' })
     }
