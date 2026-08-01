@@ -16,5 +16,13 @@ export async function getUser(request: FastifyRequest, reply: FastifyReply){
     if (!user) {
         return reply.status(404).send({ message: 'Usuário não encontrado' })
     }
-    return reply.status(200).send(user)
+    const userWithoutPassword = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
+    }
+    return reply.status(200).send(userWithoutPassword)
 }
