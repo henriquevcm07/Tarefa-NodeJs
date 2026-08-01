@@ -21,5 +21,13 @@ export async function deleteUser(request: FastifyRequest, reply: FastifyReply){
             id: Number(targetUserId),
         },
     })
-    return reply.status(200).send({user, message: 'Usuário deletado com sucesso.'})
+    const userWithoutPassword = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
+    }
+    return reply.status(200).send({user: userWithoutPassword, message: 'Usuário deletado com sucesso.'})
     }
