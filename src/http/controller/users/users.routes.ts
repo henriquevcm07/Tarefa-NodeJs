@@ -4,6 +4,7 @@ import { listUsers } from './listUsers.js';
 import { getUser} from './getUser.js';
 
 export async function usersRoutes(app: FastifyInstance){
-        app.get('/', {onRequest: [verifyJwt]}, listUsers)
-        app.get('/:id', {onRequest: [verifyJwt]}, getUser)
-}
+    app.get('/', {onRequest: [verifyJwt]}, listUsers)
+    app.get('/:id', {onRequest: [verifyJwt]}, getUser)
+    app.put('/:id', {onRequest: [verifyJwt]}, getUser)
+    }
