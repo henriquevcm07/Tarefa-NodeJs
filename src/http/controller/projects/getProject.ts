@@ -11,5 +11,12 @@ export async function getProject(request: FastifyRequest, reply: FastifyReply){
     if (!project) {
         return reply.status(404).send({ error: 'Projeto não encontrado' })
     }
-    return reply.status(200).send(project)
+    const projectResponse = {
+        name: project.name,
+        description: project.description,
+        status: project.status,
+        createdAt: project.createdAt,
+        updatedAt: project.updatedAt,
+    }
+    return reply.status(200).send(projectResponse)
 }
