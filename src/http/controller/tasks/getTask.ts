@@ -10,14 +10,19 @@ export async function getTask(request: FastifyRequest, reply: FastifyReply){
         include: {
             tasksUsers: {
                 select: {
-                    userId: true, 
-                    name: true,
-                    email: true,
-                    role: true,
+                    userId: true,
+                    user:{
+                        select: {
+                        name: true,     
+                        email: true,
+                        role: true,
+                        }
+                    }
                 }
+            },
+        }
+    })
 
-        },
-    }})
     if (!task) {
         return reply.status(404).send({ error: 'Tarefa não encontrada' })
     }
@@ -32,9 +37,9 @@ export async function getTask(request: FastifyRequest, reply: FastifyReply){
         updatedAt: task.updatedAt,
         assignedUsers: task.tasksUsers.map((taskUser) => ({
             Id: taskUser.userId,
-            name: taskUser.name,
-            email: taskUser.email,
-            role: taskUser.role,
+            name: taskUser.user.name,
+            email: taskUser.user.email,
+            role: taskUser.user.role,
         })),
     }
     return reply.status(200).send(taskResponse)
