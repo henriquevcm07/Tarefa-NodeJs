@@ -8,7 +8,7 @@ export async function createTask(request: FastifyRequest, reply: FastifyReply){
         return reply.status(403).send({ message: 'Acesso negado.' })
     }
     const createTaskBodySchema = z.object({
-        title: z.string().min(3).max(100),
+        title: z.string().min(1).max(100),
         description: z.string().optional(),
         priority: z.enum(['low', 'medium', 'high']).default('medium'),
         deadline: z.coerce.date().optional(),
@@ -37,6 +37,7 @@ export async function createTask(request: FastifyRequest, reply: FastifyReply){
             title: task.title,
             description: task.description,
             priority: task.priority,
+            completed: task.completed,
             deadline: task.deadline,
             projectId: task.projectId,
             createdAt: task.createdAt,
