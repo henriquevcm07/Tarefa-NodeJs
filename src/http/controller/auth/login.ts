@@ -6,7 +6,7 @@ import { compare } from 'bcryptjs';
 export async function login(request: FastifyRequest, reply: FastifyReply){
     const LoginBodySchema = z.object({
         email: z.email().max(100),
-        password: z.string().min(8).max(100)
+        password: z.string().min(6).max(100)
     })
 
     const {email, password} = LoginBodySchema.parse(request.body)
@@ -29,6 +29,7 @@ export async function login(request: FastifyRequest, reply: FastifyReply){
 
     const token = await reply.jwtSign(
     {
+      id: user.id,
       role: user.role, 
     },
     {
