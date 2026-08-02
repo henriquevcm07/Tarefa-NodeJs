@@ -45,7 +45,7 @@ export async function updateUser(request: FastifyRequest, reply: FastifyReply){
         return reply.status(404).send({ message: 'Usuário não encontrado.' })
     }
     
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
         where: {
             id: Number(targetUserId),
         },
@@ -53,12 +53,12 @@ export async function updateUser(request: FastifyRequest, reply: FastifyReply){
     })
     
     const userWithoutPassword = {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            createdAt: user.createdAt,
-            updatedAt: user.updatedAt
+            id: updatedUser.id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            role: updatedUser.role,
+            createdAt: updatedUser.createdAt,
+            updatedAt: updatedUser.updatedAt
         
     }
     return reply.status(200).send(userWithoutPassword)
