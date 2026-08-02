@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 export async function listTasks(request: FastifyRequest, reply: FastifyReply){
     const listTasksQuerySchema = z.object({
-        completed: z.enum(['false', 'true']).optional().transform((val) => val === 'true'),
+        completed: z.enum(['false', 'true']).optional(),
         priority: z.enum(['low', 'medium', 'high']).optional(),
         sort: z.string().optional(),
         order: z.enum(['asc', 'desc']).default('asc').optional(),
