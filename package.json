@@ -8,9 +8,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "start:dev": "tsx src/server.ts",
-    "start:prod": "node build/server.js",
-    "build": "tsup"
+    "dev": "tsx src/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src/server.ts --format esm --out-dir build",
+    "postinstall": "prisma generate"
   },
   "repository": {
     "type": "git",
