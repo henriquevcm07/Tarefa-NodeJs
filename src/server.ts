@@ -8,3 +8,7 @@ app.listen({
 }).then(() => {
     const url = `http://localhost:${env.PORT}`
     console.log(`HTTP Server running at ${url}`)}) 
+.catch((err) => {
+    console.error('❌ Erro ao subir o servidor:', err)
+    process.exit(1)
+  })
