@@ -10,7 +10,7 @@ app.register(fastifyJwt, {
     secret: env.JWT_SECRET
 })
 
-app.register(cors, {
+await app.register(cors, {
   origin: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 })
