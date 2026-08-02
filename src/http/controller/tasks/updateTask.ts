@@ -43,5 +43,5 @@ export async function updateTask(request: FastifyRequest, reply: FastifyReply){
         data: dataToUpdate
     })
 
-    return reply.status(200).send({task: task, message: 'Tarefa atualizada com sucesso.'})
+    return reply.status(200).send(task)
 }

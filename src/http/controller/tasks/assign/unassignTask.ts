@@ -34,5 +34,5 @@ export async function unassignTask(request: FastifyRequest, reply: FastifyReply)
             }
         }
     })
-    return reply.status(200).send({ message: 'Usuário desatribuído da tarefa com sucesso.', task: updatedTask })
+    return reply.status(200).send(updatedTask )
 }

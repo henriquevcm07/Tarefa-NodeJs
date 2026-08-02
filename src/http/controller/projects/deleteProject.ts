@@ -39,5 +39,5 @@ export async function deleteProject(request: FastifyRequest, reply: FastifyReply
         createdAt: project.createdAt,
         updatedAt: project.updatedAt,
     }
-    return reply.status(204).send({project: projectResponse, message: 'Projeto deletado com sucesso.'})
+    return reply.status(204).send(projectResponse)
 }

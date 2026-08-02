@@ -25,5 +25,5 @@ export async function deleteTask(request: FastifyRequest, reply: FastifyReply){
         },
     })
 
-    return reply.status(204).send({task: task, message: 'Tarefa deletada com sucesso.'})
+    return reply.status(204).send(task)
 }

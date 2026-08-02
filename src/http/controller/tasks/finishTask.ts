@@ -34,4 +34,4 @@ export async function finishTask(request: FastifyRequest, reply: FastifyReply){
             completed: true
         }
     })
-    return reply.status(200).send({ task: updatedTask, message: 'Tarefa finalizada com sucesso.' })}
+    return reply.status(200).send( task)}

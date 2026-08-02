@@ -43,5 +43,5 @@ export async function assignTask(request: FastifyRequest, reply: FastifyReply){
             }
         }
     })
-    return reply.status(200).send({ message: 'Usuários atribuídos à tarefa com sucesso.', task: updatedTask })
+    return reply.status(200).send(updatedTask)
 }
