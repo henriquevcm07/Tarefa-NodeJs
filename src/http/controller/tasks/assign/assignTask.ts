@@ -43,5 +43,26 @@ export async function assignTask(request: FastifyRequest, reply: FastifyReply){
             }
         }
     })
-    return reply.status(200).send(updatedTask)
+    if (!updatedTask) {
+        return reply.status(404).send({ message: 'Tarefa não encontrada.' })
+    }
+    const assignedUsers = updatedTask.tasksUsers.map((tu) => ({
+        id: tu.user.id,
+        name: tu.user.name,
+        email: tu.user.email,
+        role: tu.user.role,
+    }))
+    const response = { 
+        id: updatedTask.id,
+        title: updatedTask.title,
+        description: updatedTask.description,
+        priority: updatedTask.priority,
+        deadline: updatedTask.deadline,
+        completed: updatedTask.completed,
+        projectId: updatedTask.projectId,
+        assignedUsers,
+        createdAt: updatedTask.createdAt,
+        updatedAt: updatedTask.updatedAt
+    }
+    return reply.status(200).send(response)
 }

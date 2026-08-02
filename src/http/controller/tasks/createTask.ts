@@ -24,6 +24,6 @@ export async function createTask(request: FastifyRequest, reply: FastifyReply){
             ...deadline&&{ deadline },
             projectId,
         }})
-
+    
     return reply.status(201).send(task)
 }

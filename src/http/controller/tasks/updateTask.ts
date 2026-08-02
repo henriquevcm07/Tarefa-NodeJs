@@ -35,7 +35,14 @@ export async function updateTask(request: FastifyRequest, reply: FastifyReply){
     if(completed){
         dataToUpdate.completed = completed
     }
-
+    const taskExists = await prisma.task.findUnique({
+        where: {
+            id: Number(targetTaskId),
+        },
+    })
+    if (!taskExists) {
+        return reply.status(404).send({ message: 'Tarefa não encontrada.' })
+    }
     const task = await prisma.task.update({
         where: {
             id: Number(targetTaskId),
