@@ -14,8 +14,16 @@ export async function createTask(request: FastifyRequest, reply: FastifyReply){
         deadline: z.coerce.date().optional(),
         projectId: z.coerce.number(),
     })
-    const { title, description, priority, deadline, projectId } = createTaskBodySchema.parse(request.body)
     
+    const { title, description, priority, deadline, projectId } = createTaskBodySchema.parse(request.body)
+    const projectExists = await prisma.project.findUnique({
+        where: {
+            id: Number(projectId),
+        },
+    })
+    if (!projectExists) {
+        return reply.status(404).send({ message: 'Projeto não encontrado.' })
+    }
     const task = await prisma.task.create({
         data:{
             title,
