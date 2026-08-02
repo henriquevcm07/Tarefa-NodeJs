@@ -13,6 +13,14 @@ export async function register(request: FastifyRequest, reply: FastifyReply){
 
     const {name, email, password, role} = registerBodySchema.parse(request.body)
 
+    const userWithSameEmail = await prisma.user.findUnique({
+        where: { email }
+    })
+
+    if (userWithSameEmail) {
+        return reply.status(409).send({ message: 'E-mail já cadastrado' })
+    }
+
     const hashedPassword = await hash(password, 10)
 
     const user = await prisma.user.create({

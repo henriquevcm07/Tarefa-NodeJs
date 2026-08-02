@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 export async function createProject(request: FastifyRequest, reply: FastifyReply){
     const userPayload = request.user as { sub: string, role: string }
-    
+
     if (userPayload.role !== 'admin') {
         return reply.status(403).send({ message: 'Acesso negado.' })
     } 
@@ -12,7 +12,7 @@ export async function createProject(request: FastifyRequest, reply: FastifyReply
     const createProjectBodySchema = z.object({
         name: z.string().min(3).max(100),
         description: z.string().optional().transform((value) => value || null),
-        status: z.enum(['active', 'completed', 'canceled'])
+        status: z.enum(['active', 'completed', 'canceled']).default('active')
     })
     const result = createProjectBodySchema.safeParse(request.body)
     if (!result.success) {

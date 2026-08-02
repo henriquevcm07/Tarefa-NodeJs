@@ -22,7 +22,7 @@ export async function deleteProject(request: FastifyRequest, reply: FastifyReply
         return reply.status(404).send({ message: 'Projeto não encontrado.' })
     }
     if (project.tasks.length > 0) {
-        return reply.status(400).send({ message: 'Não é possível deletar um projeto que possui tarefas associadas.' })
+        return reply.status(409).send({ message: 'Não é possível deletar um projeto que possui tarefas associadas.' })
     }
     
     prisma.project.delete({

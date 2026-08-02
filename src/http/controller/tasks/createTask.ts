@@ -10,7 +10,7 @@ export async function createTask(request: FastifyRequest, reply: FastifyReply){
     const createTaskBodySchema = z.object({
         title: z.string().min(3).max(100),
         description: z.string().optional(),
-        priority: z.enum(['low', 'medium', 'high']),
+        priority: z.enum(['low', 'medium', 'high']).default('medium'),
         deadline: z.coerce.date().optional(),
         projectId: z.coerce.number(),
     })

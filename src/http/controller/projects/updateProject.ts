@@ -17,6 +17,15 @@ export async function updateProject(request: FastifyRequest, reply: FastifyReply
     })
     const { name, description, status } = updateProjectParamsSchema.parse(request.body)
     
+    const projectExists = await prisma.project.findUnique({
+        where: {
+            id: Number(targetProjectId),
+        },
+    })
+    if (!projectExists) {
+        return reply.status(404).send({ message: 'Projeto não encontrado.' })
+    }
+
     let dataToUpdate: { name?: string; description?: string; status?: string } = {}
 
     if(name){
