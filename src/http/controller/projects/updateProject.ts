@@ -12,7 +12,7 @@ export async function updateProject(request: FastifyRequest, reply: FastifyReply
 
     const updateProjectParamsSchema = z.object({
         name: z.string().trim().min(1).max(100).optional(),
-        description: z.string().trim().max(500).optional(),
+        description: z.string().trim().max(500).optional().transform((value) => value || null),
         status: z.enum(['active', 'completed', 'canceled']).optional()
     })
     const { name, description, status } = updateProjectParamsSchema.parse(request.body)
