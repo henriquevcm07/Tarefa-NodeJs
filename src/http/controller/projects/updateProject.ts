@@ -44,13 +44,19 @@ export async function updateProject(request: FastifyRequest, reply: FastifyReply
         },
         data: dataToUpdate
     })
-
-    const projectResponse = {
-        name: project.name,
-        description: project.description,
-        status: project.status,
-        createdAt: project.createdAt,
-        updatedAt: project.updatedAt,
-    }
+    const updatedProject = await prisma.project.findUnique({
+        where: {
+            id: Number(targetProjectId),
+        },
+    })
+    let projectResponse = {}
+    if (updatedProject) {
+    projectResponse = {
+        name: updatedProject.name,
+        description: updatedProject.description,
+        status: updatedProject.status,
+        createdAt: updatedProject.createdAt,
+        updatedAt: updatedProject.updatedAt,
+    }}
     return reply.status(200).send({project: projectResponse, message: 'Projeto atualizado com sucesso.'})
 }
