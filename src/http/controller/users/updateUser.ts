@@ -36,15 +36,22 @@ export async function updateUser(request: FastifyRequest, reply: FastifyReply){
         dataToUpdate.password = hashedPassword
     }
 
-    const user = await prisma.user.update({
+    const user = await prisma.user.findUnique({
+        where: {
+            id: Number(targetUserId),
+        },
+    })
+    if (!user) {
+        return reply.status(404).send({ message: 'Usuário não encontrado.' })
+    }
+    
+    await prisma.user.update({
         where: {
             id: Number(targetUserId),
         },
             data: dataToUpdate,
     })
-    if (!user) {
-        return reply.status(404).send({ message: 'Usuário não encontrado.' })
-    }
+    
     const userWithoutPassword = {
             id: user.id,
             name: user.name,
