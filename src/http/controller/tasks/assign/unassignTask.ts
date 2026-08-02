@@ -34,5 +34,5 @@ export async function unassignTask(request: FastifyRequest, reply: FastifyReply)
             }
         }
     })
-    return reply.status(200).send(updatedTask )
+    return reply.status(204).send(updatedTask)
 }
