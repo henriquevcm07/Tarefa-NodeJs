@@ -1,8 +1,9 @@
 import fastify from 'fastify'
 import { env } from './env/index.js'
 import { appRoutes } from './http/controller/routes.js'
-import fastifyJwt from '@fastify/jwt';
+import fastifyJwt from '@fastify/jwt'
 import cors from '@fastify/cors'
+import { errorHandler } from './http/middleware/setErrorHandler.js'
 
 export const app = fastify()
 
@@ -16,3 +17,4 @@ await app.register(cors, {
 })
 
 app.register(appRoutes)
+app.setErrorHandler(errorHandler)
