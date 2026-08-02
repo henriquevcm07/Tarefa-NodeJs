@@ -32,6 +32,17 @@ export async function createTask(request: FastifyRequest, reply: FastifyReply){
             ...deadline&&{ deadline },
             projectId,
         }})
+        const response={
+            id: task.id,
+            title: task.title,
+            description: task.description,
+            priority: task.priority,
+            deadline: task.deadline,
+            projectId: task.projectId,
+            createdAt: task.createdAt,
+            updatedAt: task.updatedAt,
+            assignedUsers: []
+        }
     
-    return reply.status(201).send(task)
+    return reply.status(201).send(response)
 }
