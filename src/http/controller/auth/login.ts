@@ -6,7 +6,7 @@ import { compare } from 'bcryptjs';
 export async function login(request: FastifyRequest, reply: FastifyReply){
     const LoginBodySchema = z.object({
         email: z.email().max(100),
-        password: z.string().min(6).max(100)
+        password: z.string()
     })
 
     const {email, password} = LoginBodySchema.parse(request.body)
@@ -16,7 +16,7 @@ export async function login(request: FastifyRequest, reply: FastifyReply){
             email
         }
     })
-
+    
     if (!user) {
         return reply.status(401).send({ error: 'Credenciais inválidas' })
     }
