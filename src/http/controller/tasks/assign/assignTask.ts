@@ -14,6 +14,8 @@ export async function assignTask(request: FastifyRequest, reply: FastifyReply){
     })
     const { userIds } = assignTaskBodySchema.parse(request.body)
 
+    const uniqueUserIds = [...new Set(userIds)]
+
     const {id: targetTaskId} = request.params as { id: string }
 
     const task = await prisma.task.findUnique({
@@ -24,9 +26,9 @@ export async function assignTask(request: FastifyRequest, reply: FastifyReply){
     if (!task) {
         return reply.status(404).send({ message: 'Tarefa não encontrada.' })
     }
-
+    
     await prisma.taskUser.createMany({
-        data: userIds.map((userId) => ({
+        data: uniqueUserIds.map((userId) => ({
             taskId: Number(targetTaskId),
             userId: userId,
         })),
