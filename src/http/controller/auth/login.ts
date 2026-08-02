@@ -18,13 +18,13 @@ export async function login(request: FastifyRequest, reply: FastifyReply){
     })
     
     if (!user) {
-        return reply.status(401).send({ error: 'Credenciais inválidas' })
+        return reply.status(401).send({ message: 'Credenciais inválidas' })
     }
 
     const isPasswordValid = await compare(password, user.password)
 
     if (!isPasswordValid) {
-        return reply.status(401).send({ error: 'Credenciais inválidas' })
+        return reply.status(401).send({ message: 'Credenciais inválidas' })
     }
 
     const token = await reply.jwtSign(

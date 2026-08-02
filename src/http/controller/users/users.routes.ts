@@ -9,8 +9,7 @@ import { listUserTasks } from './listUsertasks.js';
 export async function usersRoutes(app: FastifyInstance){
     app.get('/', {onRequest: [verifyJwt]}, listUsers)
     app.get('/:id', {onRequest: [verifyJwt]}, getUser)
-    app.get('/:id/tasks', {onRequest: [verifyJwt]}, listUserTasks)
     app.put('/:id', {onRequest: [verifyJwt]}, updateUser)
     app.delete('/:id', {onRequest: [verifyJwt]}, deleteUser)
-
+    app.get('/:id/tasks', {onRequest: [verifyJwt]}, listUserTasks)
     }
