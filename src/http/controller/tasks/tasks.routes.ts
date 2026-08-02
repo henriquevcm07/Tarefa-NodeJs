@@ -5,7 +5,7 @@ import { getTask } from './getTask.js';
 import { createTask } from './createTask.js';
 import { updateTask } from './updateTask.js';
 import { deleteTask } from './deleteTask.js';
-import { finishTask } from './finishTask.js';
+import { completeTask } from './completeTask.js';
 import { assignTask } from './assign/assignTask.js';
 import { unassignTask } from './assign/unassignTask.js';
 
@@ -15,7 +15,7 @@ export async function tasksRoutes(app: FastifyInstance){
         app.post('/', {onRequest: [verifyJwt]}, createTask)
         app.put('/:id', {onRequest: [verifyJwt]}, updateTask)
         app.delete('/:id', {onRequest: [verifyJwt]}, deleteTask)
-        app.patch('/:id', {onRequest: [verifyJwt]}, finishTask)
+        app.patch('/:id/complete', {onRequest: [verifyJwt]}, completeTask)
         app.post('/:id/assign', {onRequest: [verifyJwt]}, assignTask)
         app.delete('/:id/assign/:userId', {onRequest: [verifyJwt]}, unassignTask)
 }

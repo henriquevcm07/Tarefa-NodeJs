@@ -1,7 +1,7 @@
 import { prisma } from '@/libs/prisma.js'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
-export async function finishTask(request: FastifyRequest, reply: FastifyReply){
+export async function completeTask(request: FastifyRequest, reply: FastifyReply){
     const userPayload = request.user as { sub: string, role: string }
 
     const { id: targetTaskId } = request.params as { id: string }
@@ -34,4 +34,5 @@ export async function finishTask(request: FastifyRequest, reply: FastifyReply){
             completed: true
         }
     })
-    return reply.status(200).send( task)}
+    return reply.status(200).send( updatedTask)
+}

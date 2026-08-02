@@ -24,10 +24,10 @@ export async function projectReport(request: FastifyRequest, reply: FastifyReply
         const completionPercentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
         return {
             projectId: project.id,
-            projectName: project.name,
+            name: project.name,
             totalTasks,
             completedTasks,
-            completionPercentage: completionPercentage.toFixed(2) + '%'
+            completionPercentage
         };
     })
     return reply.status(200).send(response)}
