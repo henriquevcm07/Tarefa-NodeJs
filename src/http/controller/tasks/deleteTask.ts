@@ -18,8 +18,12 @@ export async function deleteTask(request: FastifyRequest, reply: FastifyReply){
     if (!task) {
         return reply.status(404).send({ message: 'Tarefa não encontrada.' })
     }
-    
-    prisma.task.delete({
+    await prisma.taskUser.deleteMany({
+        where: {
+            taskId: Number(targetTaskId),
+        },
+    })
+    await prisma.task.delete({
         where: {
             id: Number(targetTaskId),
         },

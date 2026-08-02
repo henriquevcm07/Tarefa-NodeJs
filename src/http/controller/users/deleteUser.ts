@@ -21,6 +21,11 @@ export async function deleteUser(request: FastifyRequest, reply: FastifyReply){
     if (!userExists) {
         return reply.status(404).send({ message: 'Usuário não encontrado.' })
     }
+    await prisma.taskUser.deleteMany({
+        where: {
+            userId: Number(targetUserId),
+        },
+    })
     const user = await prisma.user.delete({
         where: {
             id: Number(targetUserId),
