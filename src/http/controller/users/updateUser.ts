@@ -42,21 +42,17 @@ export async function updateUser(request: FastifyRequest, reply: FastifyReply){
         },
             data: dataToUpdate,
     })
-    const updatedUser = await prisma.user.findUnique({
-        where: {
-            id: Number(targetUserId),
-        },
-    })
-    let userWithoutPassword = {}
-    if (updatedUser){
-        userWithoutPassword = {
-            id: updatedUser.id,
-            name: updatedUser.name,
-            email: updatedUser.email,
-            role: updatedUser.role,
-            createdAt: updatedUser.createdAt,
-            updatedAt: updatedUser.updatedAt
-        }
+    if (!user) {
+        return reply.status(404).send({ message: 'Usuário não encontrado.' })
+    }
+    const userWithoutPassword = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+        
     }
     return reply.status(200).send(userWithoutPassword)
 }

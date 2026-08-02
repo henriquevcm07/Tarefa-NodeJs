@@ -13,7 +13,14 @@ export async function deleteUser(request: FastifyRequest, reply: FastifyReply){
     if (!isAdmin) {
     return reply.status(403).send({ message: 'Acesso negado.' })
     }
-
+    const userExists = await prisma.user.findUnique({
+        where: {
+            id: Number(targetUserId),
+        },
+    })
+    if (!userExists) {
+        return reply.status(404).send({ message: 'Usuário não encontrado.' })
+    }
     const user = await prisma.user.delete({
         where: {
             id: Number(targetUserId),
