@@ -47,6 +47,6 @@ export async function login(request: FastifyRequest, reply: FastifyReply){
         createdAt: user.createdAt,
         updatedAt: user.updatedAt
     }
-    return reply.status(201).send({ token, user: userWithoutPassword })
+    return reply.status(200).send({ token, user: userWithoutPassword })
     }
        
