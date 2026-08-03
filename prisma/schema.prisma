@@ -59,4 +59,6 @@ model TaskUser{
   userId        Int
   user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   assignedAt    DateTime  @default(now())
+
+  @@unique([taskId, userId])
 }
