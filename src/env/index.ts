@@ -15,6 +15,9 @@ const envSchema = z.object({
   CORS_ORIGIN: z.string().optional(),
 })
 
+
+
+
 const _env = envSchema.safeParse(process.env)
 
 if (_env.success === false) {
