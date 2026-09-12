@@ -16,8 +16,6 @@ const envSchema = z.object({
 })
 
 
-
-
 const _env = envSchema.safeParse(process.env)
 
 if (_env.success === false) {
