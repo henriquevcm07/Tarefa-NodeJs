@@ -1,17 +1,17 @@
-import type { FastifyInstance } from 'fastify';
-import { listProjects } from './listProjects.js';
-import { verifyJwt } from '@/http/middleware/verify-jwt.js';
-import { getProject } from './getProject.js';
-import { createProject } from './createProject.js';
-import { updateProject } from './updateProject.js';
-import { deleteProject } from './deleteProject.js';
-import { listTasks } from './listTasks.js';
+import type { FastifyInstance } from 'fastify'
+import { verifyJwt } from '@/http/middleware/verify-jwt.js'
+import { createProject } from './create-project.js'
+import { deleteProject } from './delete-project.js'
+import { getProject } from './get-project.js'
+import { listProjects } from './list-projects.js'
+import { listTasks } from './list-tasks.js'
+import { updateProject } from './update-project.js'
 
-export async function projectsRoutes(app: FastifyInstance){
-        app.get('/', {onRequest: [verifyJwt]}, listProjects)
-        app.get('/:id', {onRequest: [verifyJwt]}, getProject)
-        app.post('/', {onRequest: [verifyJwt]}, createProject)
-        app.put('/:id', {onRequest: [verifyJwt]}, updateProject)
-        app.delete('/:id', {onRequest: [verifyJwt]}, deleteProject)
-        app.get('/:id/tasks', {onRequest: [verifyJwt]}, listTasks)
+export async function projectsRoutes(app: FastifyInstance) {
+  app.get('/', { onRequest: [verifyJwt] }, listProjects)
+  app.get('/:id', { onRequest: [verifyJwt] }, getProject)
+  app.post('/', { onRequest: [verifyJwt] }, createProject)
+  app.put('/:id', { onRequest: [verifyJwt] }, updateProject)
+  app.delete('/:id', { onRequest: [verifyJwt] }, deleteProject)
+  app.get('/:id/tasks', { onRequest: [verifyJwt] }, listTasks)
 }

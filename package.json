@@ -11,7 +11,10 @@
     "dev": "tsx src/server.ts",
     "start": "node build/server.js",
     "build": "tsup src/server.ts --format esm --out-dir build",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "lint:fix": "biome check --write ."
   },
   "repository": {
     "type": "git",
@@ -39,6 +42,7 @@
     "zod": "4.4.3"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.5.13",
     "@types/bcryptjs": "2.4.6",
     "@types/node": "26.1.2",
     "@types/pg": "8.20.0",

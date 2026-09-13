@@ -1,42 +1,43 @@
-import { z } from 'zod';
-import { prisma } from '@/libs/prisma.js';
-import { hash } from 'bcryptjs';
-import type { FastifyReply, FastifyRequest } from 'fastify';
+import { hash } from 'bcryptjs'
+import type { FastifyReply, FastifyRequest } from 'fastify'
+import { z } from 'zod'
+import { prisma } from '@/libs/prisma.js'
 
-export async function register(request: FastifyRequest, reply: FastifyReply){
-    const registerBodySchema = z.object({
-        name: z.string().trim().min(1).max(100), 
-        email: z.email().max(100),
-        password: z.string().min(6).max(100),
-        role: z.enum(['admin', 'user']).default('user'),
-    })
+export async function register(request: FastifyRequest, reply: FastifyReply) {
+  const registerBodySchema = z.object({
+    name: z.string().trim().min(1).max(100),
+    email: z.email().max(100),
+    password: z.string().min(6).max(100),
+    role: z.enum(['admin', 'user']).default('user'),
+  })
 
-    const {name, email, password, role} = registerBodySchema.parse(request.body)
+  const { name, email, password, role } = registerBodySchema.parse(request.body)
 
-    const userWithSameEmail = await prisma.user.findUnique({
-        where: { email }
-    })
+  const userWithSameEmail = await prisma.user.findUnique({
+    where: { email },
+  })
 
-    if (userWithSameEmail) {
-        return reply.status(409).send({ message: 'E-mail já cadastrado' })
-    }
+  if (userWithSameEmail) {
+    return reply.status(409).send({ message: 'E-mail já cadastrado' })
+  }
 
-    const hashedPassword = await hash(password, 10)
+  const hashedPassword = await hash(password, 10)
 
-    const user = await prisma.user.create({
-        data:{
-            name,
-            email,
-            password: hashedPassword,
-            role
-        }})
-    const userWithoutPassword = {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt
-    }
-    return reply.status(201).send(userWithoutPassword)
+  const user = await prisma.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+      role,
+    },
+  })
+  const userWithoutPassword = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+  }
+  return reply.status(201).send(userWithoutPassword)
 }

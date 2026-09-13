@@ -1,14 +1,14 @@
+import cors from '@fastify/cors'
+import fastifyJwt from '@fastify/jwt'
 import fastify from 'fastify'
 import { env } from './env/index.js'
 import { appRoutes } from './http/controller/routes.js'
-import fastifyJwt from '@fastify/jwt'
-import cors from '@fastify/cors'
-import { errorHandler } from './http/middleware/setErrorHandler.js'
+import { errorHandler } from './http/middleware/set-error-handler.js'
 
 export const app = fastify()
 
 app.register(fastifyJwt, {
-    secret: env.JWT_SECRET
+  secret: env.JWT_SECRET,
 })
 
 await app.register(cors, {
