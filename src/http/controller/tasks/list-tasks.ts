@@ -14,16 +14,16 @@ export async function listTasks(request: FastifyRequest, reply: FastifyReply) {
     request.query,
   )
 
-  const where: { completed?: string; priority?: string } = {}
+  const where: { completed?: boolean; priority?: string } = {}
   if (completed !== undefined) {
-    where.completed = completed
+    where.completed = completed === 'true'
   }
   if (priority !== undefined) {
     where.priority = priority
   }
   const orderBy: Record<string, string> = {}
   if (sort) {
-    orderBy[sort] = order
+    orderBy[sort] = order ?? 'asc'
   }
   const tasks = await prisma.task.findMany({
     where,

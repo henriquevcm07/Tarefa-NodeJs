@@ -1,5 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import { authRoutes } from './auth/auth.routes.js'
+import { resetPassword } from './auth/reset-password.js'
 import { projectsRoutes } from './projects/projects.routes.js'
 import { reportsRoutes } from './reports/reports.route.js'
 import { tasksRoutes } from './tasks/tasks.routes.js'
@@ -11,6 +12,7 @@ export async function appRoutes(app: FastifyInstance) {
   app.register(usersRoutes, { prefix: '/users' })
   app.register(tasksRoutes, { prefix: '/tasks' })
   app.register(reportsRoutes, { prefix: '/reports' })
+  app.post('/auth/reset-password', resetPassword)
   app.get('/health', async (_request, reply) => {
     return reply.status(200).send({ status: 'ok' })
   })

@@ -18,6 +18,9 @@ const envSchema = z.object({
   CORS_ORIGIN: z.string().optional(),
   EMAIL_USERNAME: z.email(),
   EMAIL_PASSWORD: z.string().min(1),
+
+  FRONTEND_URL: z.string().default('http://localhost:3000'),
+  APP_NAME: z.string().default('Tarefa Node'),
 })
 
 const _env = envSchema.safeParse(process.env)
