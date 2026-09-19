@@ -16,6 +16,8 @@ const envSchema = z.object({
 
   HASH_SALT_ROUNDS: z.coerce.number().optional(),
   CORS_ORIGIN: z.string().optional(),
+  EMAIL_USERNAME: z.email(),
+  EMAIL_PASSWORD: z.string().min(1),
 })
 
 const _env = envSchema.safeParse(process.env)
