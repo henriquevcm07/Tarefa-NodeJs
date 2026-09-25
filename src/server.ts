@@ -2,7 +2,6 @@ import { app } from './app.js'
 import { env } from './env/index.js'
 import { setupTrendingPostsJob } from './jobs/trending-posts.js'
 
-
 app
   .listen({
     host: env.HOST,
