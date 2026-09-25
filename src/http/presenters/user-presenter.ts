@@ -8,7 +8,7 @@ type HTTPUser = {
   createdAt: Date
   updatedAt: Date
 }
-// biome-ignore lint/complexity/noStaticOnlyClass:  presenter 
+// biome-ignore lint/complexity/noStaticOnlyClass:  presenter
 export class UserPresenter {
   static toHTTP(user: User): HTTPUser
   static toHTTP(users: User[]): HTTPUser[]

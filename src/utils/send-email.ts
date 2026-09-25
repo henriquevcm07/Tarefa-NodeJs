@@ -25,7 +25,7 @@ export async function sendEmail({
 }: SendEmailRequest): Promise<SentMessageInfo> {
   try {
     const info = await transporter.sendMail({
-      from: `"Suporte" <${env.EMAIL_USERNAME}>`,
+      from: `"App" <${env.EMAIL_USERNAME}>`,
       to,
       subject,
       text: message,
