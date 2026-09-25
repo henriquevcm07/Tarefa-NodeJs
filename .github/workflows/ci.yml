@@ -1,0 +1,83 @@
+name: Lint and Build                                                                                                               
+                                                                                                                                       
+on:                                                                                                                                
+  workflow_dispatch:                                                                                                               
+  push:                                                                                                                            
+    branches: ['main', 'setup-ci']                                                                                                 
+  pull_request:                                                                                                                    
+    branches: ['**']                                                                                                               
+                                                                                                                                    
+env:                                                                                                                               
+  DUMMY_DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy"                                                              
+                                                                                                                                    
+jobs:                                                                                                                              
+  lint-test-build:                                                                                                                 
+    runs-on: ubuntu-latest                                                                                                         
+                                                                                                                                    
+    strategy:                                                                                                                      
+      matrix:                                                                                                                      
+        node: [20.x, 22.x]                                                                                                         
+      fail-fast: false                                                                                                             
+                                                                                                                                    
+    steps:                                                                                                                         
+      - name: Checkout do código                                                                                                   
+        uses: actions/checkout@v4                                                                                                  
+                                                                                                                                    
+      - name: Setup Node.js ${{ matrix.node }}                                                                                     
+        uses: actions/setup-node@v4                                                                                                
+        with:                                                                                                                      
+          node-version: ${{ matrix.node }}                                                                                         
+          cache: 'npm'                                                                                                             
+                                                                                                                                    
+      - name: Cache Prisma Engine                                                                                                  
+        uses: actions/cache@v4                                                                                                     
+        with:                                                                                                                      
+          path: ~/.cache/prisma                                                                                                    
+          key: ${{ runner.os }}-prisma-${{ hashFiles('**/package-lock.json') }}                                                    
+          restore-keys: |                                                                                                          
+            ${{ runner.os }}-prisma-                                                                                               
+                                                                                                                                    
+      - name: Install Dependencies                                                                                                 
+        run: npm ci                                                                                                                
+                                                                                                                                    
+      - name: Run Linter                                                                                                           
+        run: |                                                                                                                     
+          npm run lint                                                                                                             
+          echo "✅ Lint passed" >> $GITHUB_STEP_SUMMARY                                                                            
+                                                                                                                                    
+      - name: Type Checking                                                                                                        
+        run: |                                                                                                                     
+          npx tsc --noEmit                                                                                                         
+          echo "✅ Type checking passed" >> $GITHUB_STEP_SUMMARY                                                                   
+                                                                                                                                    
+      - name: Generate Prisma Client                                                                                               
+        env:                                                                                                                       
+          DATABASE_URL: ${{ env.DUMMY_DATABASE_URL }}                                                                              
+        run: |                                                                                                                     
+          npx prisma generate                                                                                                      
+          echo "✅ Prisma Client generated" >> $GITHUB_STEP_SUMMARY                                                                
+                                                                                                                                    
+      - name: Build                                                                                                                
+        env:                                                                                                                       
+          DATABASE_URL: ${{ env.DUMMY_DATABASE_URL }}                                                                              
+        run: |                                                                                                                     
+          npm run build                                                                                                            
+          echo "✅ Build succeeded" >> $GITHUB_STEP_SUMMARY                                                                        
+                                                                                                                                    
+      - name: Final Summary                                                                                                        
+        if: always()                                                                                                               
+        run: |                                                                                                                     
+          echo "## 🧾 Pipeline Summary" >> $GITHUB_STEP_SUMMARY                                                                    
+          echo "Node.js v${{ matrix.node }}" >> $GITHUB_STEP_SUMMARY                                                               
+          echo "🕒 Completed at $(date)" >> $GITHUB_STEP_SUMMARY                                                                   
+          if [ "${{ job.status }}" == "success" ]; then                                                                            
+            echo "Status: 🟢 Success" >> $GITHUB_STEP_SUMMARY                                                                      
+          else                                                                                                                     
+            echo "Status: 🔴 Failed" >> $GITHUB_STEP_SUMMARY                                                                       
+          fi                                                                                                                       
+          echo "" >> $GITHUB_STEP_SUMMARY                                                                                          
+          echo "### Build Artifacts" >> $GITHUB_STEP_SUMMARY                                                                       
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY                                                                                    
+          if [ -d build ]; then ls -lh build/ | tail -n +2 >> $GITHUB_STEP_SUMMARY; else echo "No build/ folder found (Build failed
+or created empty build)" >> $GITHUB_STEP_SUMMARY; fi                                                                                 
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
