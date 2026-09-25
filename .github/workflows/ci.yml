@@ -8,7 +8,7 @@ on:
     branches: ['**']
 
 env:
-  DUMMY_DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy"
+  DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy"
 
 jobs:
   lint-test-build:
@@ -51,15 +51,11 @@ jobs:
           echo "✅ Type checking passed" >> $GITHUB_STEP_SUMMARY
 
       - name: Generate Prisma Client
-        env:
-          DATABASE_URL: ${{ env.DUMMY_DATABASE_URL }}
         run: |
           npx prisma generate
           echo "✅ Prisma Client generated" >> $GITHUB_STEP_SUMMARY
 
       - name: Build
-        env:
-          DATABASE_URL: ${{ env.DUMMY_DATABASE_URL }}
         run: |
           npm run build
           echo "✅ Build succeeded" >> $GITHUB_STEP_SUMMARY
