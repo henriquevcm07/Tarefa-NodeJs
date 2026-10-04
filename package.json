@@ -14,7 +14,10 @@
     "postinstall": "prisma generate",
     "lint": "biome check .",
     "format": "biome format --write .",
-    "lint:fix": "biome check --write ."
+    "lint:fix": "biome check --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "repository": {
     "type": "git",
@@ -50,6 +53,9 @@
     "@types/node": "26.1.2",
     "@types/node-cron": "3.0.11",
     "@types/pg": "8.20.0",
-    "prisma": "7.9.1"
+    "@vitest/coverage-v8": "5.0.3",
+    "prisma": "7.9.1",
+    "vite-tsconfig-paths": "6.1.1",
+    "vitest": "5.0.3"
   }
 }
