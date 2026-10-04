@@ -22,9 +22,6 @@ const envSchema = z.object({
 
   FRONTEND_URL: z.string().default('http://localhost:3000'),
   APP_NAME: z.string().default('Tarefa Node'),
-
-  REDIS_HOST: z.string().default('127.0.0.1'),
-  REDIS_PORT: z.coerce.number().int().min(0).max(65535).default(6379),
 })
 
 const _env = envSchema.safeParse(process.env)
