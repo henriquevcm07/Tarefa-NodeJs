@@ -1,7 +1,7 @@
-import type { HashProvider } from '@/providers/hash-provider.js'
 import type { User } from '@/@types/prisma/client.js'
-import type { UserRepository } from '@/repositories/users-repository.js'
+import type { HashProvider } from '@/providers/hash-provider.js'
 import type { TokenProvider } from '@/providers/token-provider.js'
+import type { UserRepository } from '@/repositories/users-repository.js'
 import { InvalidCredentialsError } from '@/use-cases/errors/invalid-credentials-error.js'
 
 interface AuthenticateUserUseCaseRequest {

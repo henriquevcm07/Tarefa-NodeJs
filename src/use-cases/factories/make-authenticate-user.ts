@@ -1,8 +1,8 @@
 import { compare } from 'bcryptjs'
-import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository.js'
-import { AuthenticateUserUseCase } from '@/use-cases/users/authenticate-user.js'
 import type { HashProvider } from '@/providers/hash-provider.js'
 import type { TokenProvider } from '@/providers/token-provider.js'
+import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository.js'
+import { AuthenticateUserUseCase } from '@/use-cases/users/authenticate-user.js'
 
 export function makeAuthenticateUserUseCase(tokenProvider: TokenProvider) {
   const userRepository = new PrismaUsersRepository()
